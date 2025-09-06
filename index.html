@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Сайт стримерши по Валоранту</title>
+    <style>
+        :root {
+            --bg: #f4f1f7;
+            --card: #ffffff;
+            --border: #1c1c1c;
+            --text: #1f1f1f;
+            --muted: #75707f;
+            --shadow: 0 10px 26px rgba(0,0,0,.06);
+            --card-radius: 36px;
+            --tile-radius: 22px;
+            --gap: 14px;
+            /* ширина колонок (адаптив через clamp) */
+            --col1: clamp(300px, 23vw, 380px); /* левая */
+            --col2: clamp(340px, 28vw, 520px); /* средняя */
+            /* правая колонка «1fr» в сетке — растянется сама */
+
+            --avatar-size: 120px;
+            /* ГЛОБАЛЬНАЯ ширина карточек со свинками */
+            --pig-w: 520px; /* Поменяй это число — и обе карточки «свинки» станут шире/уже */
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+        }
+
+        /* Контейнер */
+        .wrap {
+            max-width: clamp(1024px, 92vw, 1400px);
+            margin: 28px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: var(--col1) var(--col2) 1fr;
+            gap: var(--gap);
+            align-items: start;
+        }
+
+        .col {
+            display: grid;
+            grid-auto-rows: auto;
+            gap: var(--gap);
+        }
+
+        .card {
+            background: var(--card);
+            border: 3px solid var(--border);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow);
+            padding: 16px;
+            overflow: hidden;
+            margin-top: var(--mt,0);
+        }
+
+            /* Заголовки карточек — по центру */
+            .card .title,
+            .card h3 {
+                margin: 0 0 10px;
+                text-align: center;
+                font-weight: 800;
+            }
+
+        /* Левый блок */
+        .about .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .about .avatar {
+            width: var(--avatar-size);
+            height: var(--avatar-size);
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            object-fit: cover;
+            background: #fff;
+            flex: 0 0 var(--avatar-size);
+        }
+
+        .about .title {
+            font-weight: 800;
+            line-height: 1.15;
+            text-align: left; /* только тут слева, как в макете */
+        }
+
+        .socials {
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .social {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: #f0eef5;
+            border: 1.6px solid #d9d4e3;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #1b1b1b;
+        }
+
+            .social img {
+                width: 20px;
+                height: 20px;
+                object-fit: contain
+            }
+
+            .social:hover {
+                background: #eae7f2
+            }
+
+        /* Кнопки и прицелы */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: var(--gap);
+        }
+
+        .tile {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #fff;
+            border: 3px solid var(--border);
+            border-radius: var(--tile-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .tile img {
+                width: 78%;
+                height: 78%;
+                object-fit: contain;
+                image-rendering: pixelated;
+            }
+
+        .aim {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px
+        }
+
+            .aim .label {
+                font-size: 13px;
+                color: #6d6d6d
+            }
+
+        .copy-btn {
+            position: absolute;
+            inset: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+
+            .copy-btn.copied::after {
+                content: "скопировано!";
+                position: absolute;
+                left: 50%;
+                bottom: 8px;
+                transform: translateX(-50%);
+                background: #111;
+                color: #fff;
+                font-size: 12px;
+                padding: 4px 8px;
+                border-radius: 10px;
+            }
+
+        /* Spotify */
+        .spotify iframe {
+            width: 100%;
+            border: 0;
+        }
+
+        .spotify .note {
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* Котики */
+        .cats .frame {
+            height: var(--h, 520px);
+            border: 3px solid var(--border);
+            border-radius: calc(var(--card-radius) - 6px);
+            background: #fff;
+            overflow: hidden;
+        }
+
+            .cats .frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        /* Свинки */
+        .wrap > .col:last-child {
+            justify-items: center;
+        }
+        /* чтобы более узкая свинка стояла по центру */
+        .pig {
+            width: 100%;
+            max-width: var(--pig-w); /* ← главное: глобальная ширина свинок */
+        }
+
+            .pig .ph {
+                height: var(--h, 360px);
+                display: block;
+                overflow: hidden;
+                border-radius: calc(var(--card-radius) - 10px);
+                text-decoration: none;
+                background: #fff;
+                border: none;
+            }
+
+                .pig .ph img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                    display: block;
+                    border-radius: inherit;
+                }
+
+        /* Адаптив — на узких экранах всё в одну колонку */
+        @media (max-width:1100px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+
+            :root {
+                --avatar-size: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="wrap">
+        <!-- Левая колонка -->
+        <div class="col">
+
+            <section class="card about">
+                <div class="header">
+                    <img class="avatar" src="assets/avatar.jpg" alt="аватар твич" />
+                    <div class="title">мою личность сформировали бойцовский клуб, группа тату и гараж хард лемон дринк</div>
+                </div>
+
+                <div class="socials">
+                    <a class="social" href="https://t.me/deathawak3" target="_blank" rel="noopener">
+                        <img src="assets/telegram.png" alt=""> основной телеграм канал
+                    </a>
+                    <a class="social" href="https://www.tiktok.com/@_deathawak3" target="_blank" rel="noopener">
+                        <img src="assets/tiktok.png" alt=""> тиктоки
+                    </a>
+                    <a class="social" href="https://discord.com/invite/PYS88MECFq" target="_blank" rel="noopener">
+                        <img src="assets/discord.png" alt=""> дискордик
+                    </a>
+                    <a class="social" href="https://t.me/oldboty_subs_bot?start=meDJVDAUSQ" target="_blank" rel="noopener">
+                        <img src="assets/link.png" alt=""> сабмяу
+                    </a>
+                </div>
+            </section>
+
+            <!-- Кнопки -->
+            <div class="grid-2">
+                <a class="tile" href="https://www.kinopoisk.ru/user/3678775/" target="_blank" rel="noopener" title="КиноПоиск">
+                    <img src="assets/k-logo.png" alt="КиноПоиск" />
+                </a>
+                <a class="tile" href="https://www.wildberries.ru/catalog/267618653/detail.aspx?targetUrl=SP" target="_blank" rel="noopener" title="Купить воду">
+                    <img src="assets/bottle.jpg" alt="Купить воду" />
+                </a>
+            </div>
+
+            <!-- Прицелы -->
+            <div class="grid-2 aims">
+                <div class="aim">
+                    <div class="tile" title="Прицел 1">
+                        <img src="assets/aims/crosshair.png" alt="прицел 1">
+                        <button class="copy-btn"
+                                data-code="0;s;1;P;c;5;u;000000FF;o;0.641;0t;3;0l;1;0v;0;0g;1;0o;0;0a;1;0f;0;1t;1;1l;4;1g;1;1o;0;1a;1;1m;0;1f;0;S;c;0;s;0.397;o;1"
+                                aria-label="Скопировать код прицела 1"></button>
+                    </div>
+                    <div class="label">прицел 1</div>
+                </div>
+
+                <div class="aim">
+                    <div class="tile" title="Прицел 2">
+                        <button class="copy-btn"
+                                data-code="PLACEHOLDER_CROSSHAIR_CODE_2"
+                                aria-label="Скопировать код прицела 2"></button>
+                    </div>
+                    <div class="label">прицел 2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Средняя колонка -->
+        <div class="col">
+            <section class="card spotify">
+                <div class="title">мои плейлисты</div>
+                <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/playlist/0pka9RVauJeH1jvq8UrQke?utm_source=generator&amp;theme=0"
+                        width="100%" height="352" frameborder="0" allowfullscreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <div class="note">Список треков, которые ассоциируются со мной :)</div>
+            </section>
+
+            <section class="card cats" style="--h:320px;">
+                <div class="title">ми-ми-ми котики</div>
+                <div class="frame"><img src="assets/cats.jpg" alt="котики" /></div>
+            </section>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="col">
+            <!-- Можно задать индивидуальную ширину: style="--pig-w:560px; --h:360px" -->
+            <section class="card pig" style="--h:350px">
+                <h3>Тайсон</h3>
+                <a class="ph" href="https://www.twitch.tv/deathawak3/clip/CloudyCrepuscularWalletFeelsBadMan-rE_p0Ox8TiRLc7wP"
+                   target="_blank" rel="noopener">
+                    <img src="assets/pigs/pig1.jpg" alt="Тайсон">
+                </a>
+            </section>
+
+            <section class="card pig" style="--h:340px">
+                <h3>Маленькая Свинья</h3>
+                <a class="ph" href="https://www.twitch.tv/deathawak3/clip/CloudyCrepuscularWalletFeelsBadMan-rE_p0Ox8TiRLc7wP"
+                   target="_blank" rel="noopener">
+                    <img src="assets/pigs/pig2.jpg" alt="Маленькая Свинья">
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Копирование кода прицела
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const code = btn.dataset.code || '';
+                try {
+                    await navigator.clipboard.writeText(code);
+                    btn.classList.add('copied');
+                    setTimeout(() => btn.classList.remove('copied'), 1200);
+                } catch (e) {
+                    alert('Не получилось скопировать. Код: ' + code);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
