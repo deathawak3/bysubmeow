@@ -271,32 +271,44 @@ html[data-theme="dark"] .social {
 }
 
 /* pc parts */
-.pc-parts .specs {
+.specs-card .specs {
     margin: 0;
     padding: 14px;
     border-radius: calc(var(--radius-card) - 6px);
     box-shadow: inset 0 1px 0 var(--inner), 0 0 0 1px var(--stroke);
     display: grid;
-    grid-template-columns: 140px 1fr;
+    grid-template-columns: 160px 1fr; /* слева название, справа значение */
     gap: 10px 16px;
     font-size: 15px;
 }
 
-.pc-parts .row {
+.specs-card .row { /* позволяет dt/dd занимать ячейки grid построчно */
     display: contents;
 }
 
-.pc-parts dt {
+.specs-card dt {
     margin: 0;
     color: var(--muted);
     font-weight: 700;
     text-align: right;
 }
 
-.pc-parts dd {
+.specs-card dd {
     margin: 0;
     color: var(--text);
     font-weight: 600;
+}
+
+/* адаптив: в одну колонку */
+@media (max-width:560px) {
+    .specs-card .specs {
+        grid-template-columns: 1fr;
+    }
+
+    .specs-card dt {
+        text-align: left;
+        opacity: .85;
+    }
 }
 
 /* pigs */
