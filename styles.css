@@ -50,6 +50,7 @@ body {
     align-items: start;
 }
 
+
 .col {
     display: grid;
     grid-auto-rows: auto;
@@ -97,7 +98,7 @@ body {
 }
 
 .about--tall {
-    min-height: 480px
+    min-height: 470px
 }
 
 /* socials */
@@ -361,4 +362,54 @@ html[data-theme="dark"] .social {
     .about--tall {
         min-height: auto
     }
+}
+@media (max-height:1080px) {
+    :root {
+        --gap: 10px;
+    }
+
+    .wrap {
+        gap: var(--gap);
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .aim {
+        gap: 4px;
+    }
+
+        .aim .label {
+            font-size: 11px;
+            margin-top: 0;
+        }
+}
+/* убираем пустой низ */
+.wrap {
+    margin-bottom: 0; /* если раньше было 28px */
+}
+
+/* аккуратно отсечём микропереполнение снизу */
+@supports (overflow: clip) {
+    .wrap {
+        overflow: clip;
+    }
+    /* современный, без скролл-бара */
+}
+
+@supports not (overflow: clip) {
+    .wrap {
+        overflow: hidden;
+    }
+    /* фолбэк для старых браузеров */
+}
+
+/* на всякий случай защищаемся от горизонтального «дрожания» */
+html {
+    overflow-y: auto;
+}
+
+body {
+    overflow-x: hidden;
 }
