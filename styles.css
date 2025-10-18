@@ -725,3 +725,14 @@ html[data-theme="dark"] .lightbox {
         margin-top: 4px;
     }
 }
+/* Мобайл/планшет: свинки на всю ширину */
+@media (max-width: 1100px) {
+    .wrap > .col:last-child { /* убрать центрирование, чтобы тянулось */
+        justify-items: stretch !important;
+    }
+
+    .pig {
+        max-width: none !important; /* снять ограничение 520px */
+        width: 100% !important; /* растянуть по колонке */
+    }
+}
