@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("theme", next);
     });
   }
-
   // Lightbox
   const lb = document.getElementById("lightbox");
   if (!lb) return;
