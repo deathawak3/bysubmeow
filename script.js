@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Не удалось скопировать код:", err);
     }
   });
-
   // Theme toggle
   const root = document.documentElement;
   const themeBtn = document.getElementById("theme-toggle");
@@ -43,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lbImg.alt = alt;
     lb.classList.add("is-open");
   };
-
   const close = () => lb.classList.remove("is-open");
-
   document.addEventListener("click", (e) => {
     const link = e.target.closest(".gallery .ph");
     if (!link) return;
@@ -53,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const img = link.querySelector("img");
     open(link.href, img ? img.alt : "");
   });
-
   lbClose.addEventListener("click", close);
   lb.addEventListener("click", (e) => {
     if (e.target === lb) close();
