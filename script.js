@@ -58,3 +58,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") close();
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    // ... ваш существующий код для копирования, темы и лайтбокса ...
+
+    // НОВЫЙ КОД: Логика анимации MP4 при загрузке
+    const splashScreen = document.getElementById("splash-screen");
+    const splashVideo = document.getElementById("splash-video");
+
+    if (splashScreen && splashVideo) {
+        // Функция для скрытия оверлея
+        const hideSplashScreen = () => {
+            splashScreen.classList.add("is-done");
+        };
+
+        // 1. Попытка воспроизведения видео, как только оно загрузится
+        splashVideo.onloadeddata = () => {
+            // Запуск воспроизведения. catch нужен на случай, если браузер блокирует autoplay.
+            splashVideo.play().catch(e => {
+                console.error("Autoplay failed:", e);
+                // Если автозапуск не удался, немедленно скрываем экран, чтобы показать контент
+                hideSplashScreen();
+            });
+        };
+
+        // 2. Скрытие экрана, когда видео закончится
+        splashVideo.addEventListener("ended", hideSplashScreen);
+
+        // 3. Страховка: Скрыть экран через 5 секунд, если что-то пошло не так
+        setTimeout(() => {
+            if (!splashScreen.classList.contains("is-done")) {
+                hideSplashScreen();
+            }
+        }, 5000);
+    }
+});
