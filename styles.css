@@ -512,14 +512,7 @@ html[data-theme="dark"] .lightbox {
 }
 @media (min-width: 1101px) {
     .gallery-grid > .ph:last-child {
-        grid-column: 2; 
-        width: calc(var(--c23)) !important; 
-        justify-self: center !important; 
-    }
-}
-@media (min-width: 1101px) {
-    .gallery-grid > .ph:last-child {
-        grid-column: 2 / span 1 !important; 
+        grid-column: 3 / span 1 !important; /* Теперь элемент встанет в 3-ю колонку */
         width: 100% !important; 
         margin: 0 !important; 
         justify-self: stretch !important; 
