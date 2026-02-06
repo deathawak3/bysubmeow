@@ -27,11 +27,12 @@ html[data-theme="dark"] {
 * {
     box-sizing: border-box
 }
-html, body {
-    height: 100%
-}
 html {
-    overflow-y: auto
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
 }
 body {
     margin: 0;
@@ -358,22 +359,51 @@ html[data-theme="dark"] .lightbox {
     .lightbox__close:hover {
         transform: translateY(-1px)
     }
-.theme-toggle {
+/* Общие стили для кнопок интерфейса */
+.theme-toggle,
+.scroll-top {
     position: fixed;
     right: 18px;
-    bottom: 18px;
     width: 44px;
     height: 44px;
     border: 0;
     border-radius: 12px;
     background: var(--card);
     color: var(--text);
-    font-size: 18px;
     cursor: pointer;
     box-shadow: inset 0 1px 0 var(--inner),0 0 0 1px var(--stroke),0 10px 26px rgba(0,0,0,.08);
+    transition: transform .2s ease, opacity .3s ease, visibility .3s ease;
+    z-index: 90;
+    display: grid;
+    place-items: center;
 }
-    .theme-toggle:hover {
-        transform: translateY(-1px)
+
+/* Кнопка темы (снизу) */
+.theme-toggle {
+    bottom: 18px;
+    font-size: 18px;
+}
+
+/* Кнопка наверх (над кнопкой темы) */
+.scroll-top {
+    bottom: 74px; /* 18px отступ + 44px высота кнопки + 12px зазор */
+    font-size: 22px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+    /* Показываем кнопку наверх, когда добавлен класс */
+    .scroll-top.is-visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .theme-toggle:hover,
+    .scroll-top:hover {
+        transform: translateY(-2px);
+        box-shadow: inset 0 1px 0 var(--inner),0 0 0 1px var(--stroke),0 14px 32px rgba(0,0,0,.15);
     }
 #splash-screen {
     position: fixed;

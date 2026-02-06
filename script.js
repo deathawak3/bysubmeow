@@ -115,3 +115,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+// 6. Scroll to Top Button
+const scrollTopBtn = document.getElementById('scroll-top');
+
+if (scrollTopBtn) {
+    // Показываем/скрываем кнопку при скролле
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            scrollTopBtn.classList.add('is-visible');
+        } else {
+            scrollTopBtn.classList.remove('is-visible');
+        }
+    }, { passive: true });
+
+    // Плавный скролл наверх при клике
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
