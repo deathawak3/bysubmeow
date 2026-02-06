@@ -604,11 +604,10 @@ html[data-theme="dark"] .lightbox {
     object-fit: contain; 
 }
 @media (min-width: 1101px) {
-
     .gallery-grid > .ph:last-child {
-        grid-column: 1 / -1 !important; 
-        width: var(--c23) !important;   
-        margin: 0 auto !important;      
-        justify-self: center !important;
+        grid-column: 2 !important;      
+        width: 100% !important;         
+        margin: 0 !important;           
+        justify-self: stretch !important; 
     }
 }
