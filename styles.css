@@ -14,7 +14,7 @@
     --pig-w: 520px;
     --ph-h: 530px;
     --site-w: calc(var(--c1) + var(--c23)*2 + var(--gap)*2 + var(--firstrow-shift));
-    --firstrow-shift: 96px;
+    --firstrow-shift: 78px;
 }
 html[data-theme="dark"] {
     --bg: #101216;
@@ -465,10 +465,10 @@ html[data-theme="dark"] .lightbox {
         width: 100% !important;
         margin: 0 !important
     }
-
-        .gallery-grid > .ph:nth-child(3n+1) {
-            margin-left: calc(-1 * var(--firstrow-shift)) !important;
-            width: calc(100% + var(--firstrow-shift)) !important;
+        .gallery-grid > .ph:nth-child(3n+1):not(:last-child) {
+            margin-left: -94px !important; 
+            width: calc(100% + 94px) !important; 
+            max-width: none !important;
         }
         .gallery-grid > .ph:last-child {
             grid-column: 2 !important;
