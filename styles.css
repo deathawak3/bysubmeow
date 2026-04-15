@@ -565,3 +565,34 @@ html[data-theme="dark"] .lightbox {
             height: 220px
         }
 }
+/* Разрешаем колонкам растягиваться на всю высоту родителя */
+.wrap > .col {
+    display: grid;
+    grid-template-rows: auto; /* По умолчанию строки по размеру контента */
+    height: 100%;
+}
+
+/* Класс для растягивания карточки */
+.fill-space {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Чтобы фото свинки внутри растянутой карточки тоже росло */
+.pig.fill-space .ph {
+    flex-grow: 1;
+    height: auto !important; /* Перебиваем старое значение --h */
+}
+
+/* Растягиваем список характеристик, если нужно */
+.specs-card.fill-space .specs {
+    flex-grow: 1;
+}
+
+/* На десктопе заставляем последнюю карточку в колонке забирать все свободное место */
+@media (min-width: 1101px) {
+    .wrap > .col {
+        grid-template-rows: repeat(auto-fill, auto) 1fr;
+    }
+}
