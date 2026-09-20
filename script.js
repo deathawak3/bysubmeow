@@ -20,6 +20,26 @@ document.addEventListener('DOMContentLoaded', () => {
         isMobileQuery.addEventListener('change', handleMobileLayout);
     }
 
+    // ── Gallery label position (mobile) ──
+    const galleryLabel = document.querySelector('.gallery-label');
+    const galleryGrid = document.getElementById('gallery');
+    const col2 = document.querySelector('.wrap > .col:nth-child(2)');
+
+    if (galleryLabel && galleryGrid && col2) {
+        const isMobileQueryLabel = window.matchMedia('(max-width: 1100px)');
+
+        const handleGalleryLabelLayout = (mq) => {
+            if (mq.matches) {
+                galleryGrid.before(galleryLabel);
+            } else if (galleryLabel.parentElement !== col2) {
+                col2.appendChild(galleryLabel);
+            }
+        };
+
+        handleGalleryLabelLayout(isMobileQueryLabel);
+        isMobileQueryLabel.addEventListener('change', handleGalleryLabelLayout);
+    }
+
     // ── Crosshair copy buttons ──
     document.querySelectorAll('.aim .copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
